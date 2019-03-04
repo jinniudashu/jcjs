@@ -1,0 +1,83 @@
+/**app.wxss**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+} 
+
+
+.ft-xsmall {
+  font-size: 24rpx;
+}
+
+.ft-small {
+  font-size: 28rpx;
+}
+
+.ft-middle {
+  font-size: 32rpx;
+}
+
+.d-black {
+  color: #2c3e50;
+}
+
+.s-green {
+  color: #8bc34a;
+}
+
+.d-green {
+  color: #259b24;
+}
+
+.bg-s-green {
+  background-color: #8bc34a;
+}
+
+.bg-d-green {
+  background-color: #259b24;
+}
+
+.flex {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.no-more {
+  font-size: 28rpx;
+  width: 100%;
+  color: #ceceec;
+  text-align: center;
+  margin: 20rpx 0;
+  position: relative;
+}
+
+.no-more::after,.no-more::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 150rpx;
+  background-color: #ceceec;
+  height: 1px;
+  transform: scaleY(.5);
+}
+
+.g-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 4rpx;
+  color: #ffffff;
+  background-color: #259b24;
+  box-shadow: 0 15rpx 15px 0 rgba(0, 0, 0, 0.24);
+}
+
+.no-more::after {
+  left: 70rpx;
+}
+
+.no-more::before {
+  right: 70rpx;
+}

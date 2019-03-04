@@ -1,0 +1,11 @@
+/* pages/help/help.wxss */
+.l-bg, .l-bg image {
+  width: 100%;
+}
+
+page {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

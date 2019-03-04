@@ -1,0 +1,191 @@
+<!--pages/learn/learn.wxml-->
+<view class="{{isIpad?'ipad-fit':''}}">
+
+<!-- 计算页返回TITLEBAR -->
+  <view class='header' style='height:130rpx'>
+    <navigator wx:if='{{!start}}' class='nav_back'>
+      <image src="/assets/nav_back.png" bindtap='navBack' class='btn_back'></image>
+      <text class='nav_title'>{{navTitle}}</text>
+    </navigator>
+  </view>
+
+  <!-- 成绩页 -->
+  <block wx:if="{{isEnd}}">
+    <view class='l-bg'>
+      <image mode='widthFix' src='/assets/result.png'></image>
+    </view>
+    <view class='score'>{{succRate}}</view>
+    <view wx:if="{{succRate == 100}}" class='tips ft-middle'>
+      <view>全部正确！
+        <text wx:if="{{sortedResult.length > 10}}">恭喜得到1个红气球！</text>
+      </view>
+      <image wx:if="{{sortedResult.length > 10}}" src='/assets/ico_bubble.png'></image>
+    </view>
+    <view wx:else class='tips ft-middle'> 有些题做错了，看看答案吧！</view>
+
+    <view wx:if="{{0}}" class='table ft-small'>
+      <view class='tr'>
+        <view class='td'>准确率</view>
+        <view class='td'>总时间</view>
+        <view class='td'>平均时间</view>
+        <view class='td'>最多时间</view>
+        <view class='td'>最小时间</view>
+      </view>
+
+      <view class='tr'>
+        <view class='td'>{{succRate}}%</view>
+        <view class='td'>{{totalTime}}s</view>
+        <view class='td'>{{avgTime}}s</view>
+        <view class='td'>{{maxTime}}s</view>
+        <view class='td'>{{minTime}}s</view>
+      </view>
+    </view>
+
+    <view wx:if="{{succRate != 100}}" class='table result ft-small'>
+      <view class='tr th'>
+        <view class='td'>{{gameList[gameType].value}}</view>
+        <view class='td'>答案</view>
+      </view>
+      <block wx:for="{{sortedResult}}" wx:key="{{index}}" wx:if="{{!item[1]}}">
+        <view class="tr {{index % 2 == 0?'':'bg-grey2'}}" wx:key="{{index}}">
+          <view class="td {{item[1]?'':'red'}}">{{item[0]}}={{item[3] || '未答'}}</view>
+          <view class='td'>{{answerKey[item[0]]}}</view>
+          <!-- <view class='td'>{{item[2]}}s</view> -->
+        </view>
+      </block>
+      <view class='no-more'>{{sortedResult.length ? '往下没有更多了': '没有记录'}} </view>
+    </view>
+
+    <view class='try-again'>
+      <button class='g-btn' hover-class='none' bindtap='begin'>再来一遍</button>
+      <button class='g-btn' hover-class='none' bindtap='tryAgain'>回到首页</button>
+    </view>
+  </block>
+
+<!-- 首页 -->
+  <block wx:elif="{{start}}">
+    <view class='l-bg'>
+    <navigator 
+      url="../playVideo/playVideo" 
+      open-type="navigate" >
+      <image 
+        id="adPicture"
+        mode="widthFix"
+        src="{{imgUrls}}"
+        ></image>
+    </navigator>
+    </view>
+
+  <!-- <view class='l-bg'>
+      <image mode='widthFix' src='/assets/img_face2.png'></image>
+  </view> -->
+
+  <!-- 
+    <view>
+    <swiper 
+      style='height:{{Hei}}'>
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <image 
+            src="{{item}}" 
+            class="slide-image" 
+            mode="widthFix" 
+            bindtap="swipclick" 
+            bindload='imgH'/>   
+            <!--bindload是绑定图片加载的事件,记得给image加上mode=“widthFix”这个属性哦，还有就是设置这个image 100%宽度哟
+        </swiper-item>
+      </block>
+    </swiper>
+    </view>
+  -->
+    <view class="section ft-middle">
+      <view class='bubble'>
+        <view wx:for="{{13}}" wx:key="{{index}}" class="box {{(index +1) > bubbleNum  ?'opacity':''}}">
+          <image src='/assets/ico_bubble_small.png'></image>
+        </view>
+        <text class="numtext">{{bubbleNum}}</text>
+      </view>
+      <view class='wrap'>
+        <view class='radio-group flex'>
+          <view class='l-slider'>
+           <view>速度</view>
+           <slider 
+            bindchange="sliderChange" 
+            value="{{sliderValue}}"  
+            bindchanging="sliderChange" 
+            style='width:220rpx;margin:15rpx 0rpx;margin-left:12px;' 
+            min="0" 
+            max='6' 
+            block-color="#259b24" 
+            block-size="18" 
+            step='2'>
+          </slider>
+          <view class='txt'>{{level[timeRatio-1].name}}</view>
+        </view>
+          <!-- right  -->
+        <view class='right'>
+          <view class='bubble-num'>
+            <navigator 
+              url="../help/help" 
+              open-type="navigate" >
+              <image 
+                id='helpPicture' 
+                class='ico-help' 
+                src='/assets/ico_help.png'>
+              </image>
+            </navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+
+      <!--计算过关  -->
+      <view bindtap='bindPickerChange' class='calc-wrap'>
+        <view class='item flex' wx:for="{{gameList}}" wx:key="{{item.max}}">
+          <view class='left bg-d-green' data-value="{{index}}">{{item.value}}</view>
+          <view class='right ft-small'>
+            <view style="width:{{item.per}}%" class='progress bg-s-green'></view>
+            <text>{{item.progress}}/{{item.max}}</text>
+          </view>
+        </view>
+      </view>
+      <!--计算过关 end -->
+    </view>
+    <!-- <button class='start-btn' bindtap='begin'>开始</button> -->
+  </block>
+
+
+
+<!-- 计算页 -->
+  <block wx:else>
+    <view class='header ft-middle'>{{ currIndex === questionList.length ? currIndex:currIndex+1}}/{{(questionList.length || 1)}}</view>
+    <view class='question d-black'>{{questionList[currIndex][0]}}={{veriyResult ? '?':questionList[currIndex][1]}} </view>
+    <view class='answer'>
+      <view wx:for="{{questionList[currIndex][1]}}" wx:key="{{index}}" class="veriy {{veriyCalss}}">{{answer[index] || ''}}</view>
+    </view>
+    <!-- <input class='ipt' value="{{inputValue}}" bindinput='input' auto-focus placeholder='input' type='number'></input> -->
+    <view class='keyboard' catchtap='input'>
+      <view class='btn' wx:for="{{9}}" wx:key="{{index}}">
+        <view class='n' data-num-key="{{index+1}}">{{index + 1}}</view>
+      </view>
+      <view class='btn' wx:for="{{keyboard}}" wx:key="{{index}}">
+        <view class='n' data-other-key="{{item}}">{{item}}</view>
+      </view>
+    </view>
+  </block>
+
+<!-- 单元训练完成提示 -->
+  <view class="show-tips {{showTips?'show':''}}" catchtap='closeTips'>
+    <view class='mask' catch:touchmove='preventMove'></view>
+    <view class='wrap ft-middle' catchtap='preventMove'>
+      <image class='close' catchtap='closeTips' src='/assets/ico_close.png'></image>
+      <view class='title'>此栏目训练完成</view>
+      <view class='list grey2'>
+      </view>
+      <view class='button black' catch:tap='collectBubao'>
+        <view data-btn='notset' catch:tap='removeBegin'>继续挑战</view>
+        <view data-btn='comfir' catch:tap='nextSection'>下一单元</view>
+      </view>
+    </view>
+  </view>
+</view>

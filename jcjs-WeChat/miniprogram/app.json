@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/learn/learn",
+    "pages/help/help",
+    "pages/playVideo/playVideo"
+],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "基础计算过关",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "cloud": true
+}

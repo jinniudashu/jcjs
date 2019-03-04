@@ -1,0 +1,7 @@
+/* pages/playVideo/playVideo.wxss */
+page {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

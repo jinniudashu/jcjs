@@ -1,0 +1,5 @@
+<!--pages/playVideo/playVideo.wxml-->
+
+  <view class="container">
+    <video id="myVideo" autoplay= "true" src="{{adVideoUrl}}" binderror="videoErrorCallback"></video>
+  </view>

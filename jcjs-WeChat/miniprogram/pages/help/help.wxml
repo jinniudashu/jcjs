@@ -1,0 +1,4 @@
+<!--pages/help/help.wxml-->
+  <view class="container">
+    <video id="helpVideo" autoplay= "true" src="{{helpResource}}" binderror="videoErrorCallback"></video>
+  </view>
